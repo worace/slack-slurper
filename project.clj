@@ -8,4 +8,6 @@
                  [manifold "0.1.0"]
                  [clj-slack-client "0.1.4-SNAPSHOT"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [org.clojure/tools.logging "0.3.1"]
+                 [clj-logging-config "1.9.12"]
                  ])
