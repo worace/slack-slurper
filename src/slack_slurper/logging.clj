@@ -4,13 +4,15 @@
 
 (def layout (org.apache.log4j.PatternLayout. "%d{ISO8601} %-5p %c - %m%n"))
 
-(defn configure-logging! []
-  (conf/set-loggers!
-   ["slack-slurper"]
-   {:level   :debug
-    :out (org.apache.log4j.DailyRollingFileAppender.
-          layout
-          "/var/log/slack-slurper/slack_slurper.log"
-          "'.'yyyy-MM-dd")
-    }))
+(defn configure-logging!
+  ([] (configure-logging! "/var/log/slack-slurper/slack_slurper.log"))
+  ([logfile]
+   (conf/set-loggers!
+    ["slack-slurper"]
+    {:level :debug
+     :out (org.apache.log4j.DailyRollingFileAppender.
+           layout
+           logfile
+           "'.'yyyy-MM-dd")
+     })))
 

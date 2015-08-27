@@ -4,7 +4,8 @@
             [manifold.deferred :as d]
             [clojure.core.async :as async]
             [manifold.stream :as s]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [slack-slurper.heartbeat :as hb]))
 
 (def api-token (System/getenv "SLACK_SLURPER_TOKEN"))
 
@@ -29,4 +30,12 @@
   (let [url (get-fresh-ws-url)
         connection (ws-connection url)]
     (log/info "Starting slurper loop with url: " url " and connection: " connection)
+    (hb/heartbeat conn)
     (listen msg-handler connection)))
+
+
+;; TODO -- Heartbeat / Pinging
+;; get https://github.com/dakrone/cheshire for json
+;; send slack messages like:
+;; { "id": 1234, "type": "ping"}
+
