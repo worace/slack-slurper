@@ -1,6 +1,6 @@
-(defproject slack-slurper "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+(defproject slack-slurper "0.1.0"
+  :description "Bot for listening to and recording slack messages."
+  :url "https://github.com/worace/slack-slurper"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main slack-slurper.core
