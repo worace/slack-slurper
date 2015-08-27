@@ -6,17 +6,23 @@
             [slack-slurper.logging]
             [slack-slurper.slurper :as slurper]))
 
-(slack-slurper.logging/configure-logging!)
 
 (def running? (atom true))
 
 (defn init [args]
+  (slack-slurper.logging/configure-logging!)
   (log/info "***** Slack Slurper Starting *****", args)
-  (reset! running? true))
+  (reset! running? true)
+  (println "done init"))
 
 (defn start []
+  (log/info "starting")
+  (println "starting")
   (slurper/slurp-it)
+  (println "started slurper")
   (while @running?
+    (println "tick")
+    (log/info "tick")
     (Thread/sleep 2000)))
 
 (defn stop []
@@ -31,7 +37,7 @@
   (init (.getArguments context)))
 
 (defn -start [this]
-  (future (start)))
+  (start))
 
 (defn -stop [this]
   (stop))

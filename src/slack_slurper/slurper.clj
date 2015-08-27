@@ -21,7 +21,9 @@
       (recur @(s/take! conn)))))
 
 (defn msg-handler [message]
+  (println message)
   (log/info message))
 
 (defn slurp-it []
+  (println "got token: " api-token)
   (listen msg-handler (ws-connection (get-fresh-ws-url))))
