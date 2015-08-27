@@ -1,4 +1,5 @@
 (ns slack-slurper.core
+  (:gen-class)
   (:require [clj-slack-client.web :as slack-api]
             [aleph.http :as http]
             [manifold.deferred :as d]
