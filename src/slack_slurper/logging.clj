@@ -10,7 +10,7 @@
    {:level   :debug
     :out (org.apache.log4j.DailyRollingFileAppender.
           layout
-          "logs/slack_slurper.log"
+          "/var/log/slack-slurper/slack_slurper.log"
           "'.'yyyy-MM-dd")
     }))
 
