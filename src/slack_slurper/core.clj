@@ -8,6 +8,7 @@
 
 (defn start []
   (slurper/slurp-it)
+  (log/info "**** Started slurper. Will begin wait loop. ****")
   (while @running?
     (Thread/sleep 2000)))
 

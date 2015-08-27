@@ -18,10 +18,15 @@
   (async/go
     (loop [message @(s/take! conn)]
       (f message)
-      (recur @(s/take! conn)))))
+      (if (not (s/closed? conn))
+        (recur @(s/take! conn))
+        (log/info "Stream closed. Exiting. Stream: " conn)))))
 
 (defn msg-handler [message]
   (log/info message))
 
 (defn slurp-it []
-  (listen msg-handler (ws-connection (get-fresh-ws-url))))
+  (let [url (get-fresh-ws-url)
+        connection (ws-connection url)]
+    (log/info "Starting slurper loop with url: " url " and connection: " connection)
+    (listen msg-handler connection)))
