@@ -9,7 +9,6 @@
 (defn start []
   (slurper/slurp-it)
   (while @running?
-    (log/info "tick")
     (Thread/sleep 2000)))
 
 (defn stop [] (reset! running? false))
