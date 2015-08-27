@@ -1,5 +1,6 @@
 (ns slack-slurper.slurper
   (:require [aleph.http :as http]
+            [clj-slack-client.web :as slack-api]
             [manifold.deferred :as d]
             [clojure.core.async :as async]
             [manifold.stream :as s]
@@ -22,5 +23,5 @@
 (defn msg-handler [message]
   (log/info message))
 
-(defn slurp []
+(defn slurp-it []
   (listen msg-handler (ws-connection (get-fresh-ws-url))))
