@@ -30,7 +30,7 @@
   (let [url (get-fresh-ws-url)
         connection (ws-connection url)]
     (log/info "Starting slurper loop with url: " url " and connection: " connection)
-    (hb/heartbeat conn)
+    (hb/heartbeat connection)
     (listen msg-handler connection)))
 
 
