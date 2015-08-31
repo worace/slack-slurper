@@ -12,4 +12,5 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [org.clojure/tools.logging "0.3.1"]
                  [cheshire "5.5.0"]
+                 [clojurewerkz/elastisch "2.1.0"]
                  [clj-logging-config "1.9.12"]])
