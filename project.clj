@@ -6,6 +6,7 @@
   :main ^:skip-aot slack-slurper.core
   :profiles {:uberjar {:aot :all}}
   :dependencies [[org.clojure/clojure "1.7.0"]
+                 [org.clojure/tools.nrepl "0.2.10"]
                  [aleph "0.4.0"]
                  [manifold "0.1.0"]
                  [clj-slack-client "0.1.4-SNAPSHOT"]
