@@ -8,8 +8,9 @@
 
 (def es-conn (esr/connect "http://127.0.0.1:9200"))
 (def index-name "slack_slurper")
+(def mapping-name "messages")
 (def mappings
-  {"messages" {:properties {:user    {:type "string" :store "yes"}
+  {mapping-name {:properties {:user    {:type "string" :store "yes"}
                             :channel {:type "string" :store "yes"}
                             :text    {:type "string" :store "yes" :analyzer "standard"}
                             :subtype {:type "string" :store "yes"}
@@ -21,7 +22,7 @@
 (defn log-files
   ([] (log-files "./logs"))
   ([dir] (filter (fn [f] (and (.isFile f)
-                              (.endsWith (.getName f) ".log")))
+                              (.contains (.getName f) ".log")))
                  (file-seq (clojure.java.io/file dir)))))
 
 (defn extract-message [string]
@@ -44,7 +45,7 @@
 (defn index-message! [m]
   (esd/create es-conn
               index-name
-              "message"
+              mapping-name
               (dissoc m "type" "team")
               :id (message-id m)))
 
