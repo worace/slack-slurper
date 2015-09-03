@@ -16,8 +16,6 @@ your option) any later version.
 
 ### Daemonization
 
-Based on [this article](http://www.rkn.io/2014/02/06/clojure-cookbook-daemons/), using the Apache Commons Daemons library.
-
 Just using `init.d` with the following init conf in
 `/etc/init/slack-slurper.conf`:
 
