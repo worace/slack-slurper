@@ -18,6 +18,9 @@
 
 (def create-index! (partial esi/create es-conn index-name :mappings mappings))
 (def delete-index! (partial esi/delete es-conn index-name))
+(def query (partial esd/search es-conn index-name mapping-name :query))
+
+#_(esd/search es-conn index-name "messages" :query (q/term :text "horace"))
 
 (defn log-files
   ([] (log-files "./logs"))
