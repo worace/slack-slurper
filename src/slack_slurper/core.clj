@@ -17,17 +17,18 @@
   (reset! repl-server (repl/start-server :port 7888))
   (.addShutdownHook (Runtime/getRuntime) (Thread. (fn [] (repl/stop-server @repl-server)))))
 
-(defn start []
-  (let [c (conn/ws-stream)]
-    (l/listen c #(log/info %) running?)
-    (hb/heartbeat c hb/message running?))
-  (log/info "**** Started slurper. ****"))
+(defn start!
+  ([] (let [c (conn/ws-stream)] (start! c c)))
+  ([stream sink]
+   (reset! running? true)
+   (l/listen stream #(log/info %) running?)
+   (hb/heartbeat sink hb/message running?)
+   (log/info "**** Started slurper. ****")))
 
-(defn stop [] (reset! running? false))
+(defn stop! [] (reset! running? false))
 
 (defn -main [& args]
   (slack-slurper.logging/configure-logging!)
   (start-repl!)
-  (reset! running? true)
   (log/info "***** Slack Slurper Starting *****", args)
-  (start))
+  (start!))
