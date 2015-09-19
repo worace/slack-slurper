@@ -26,6 +26,17 @@ to logging them
 * [ ] Filter out only "message" type messages (lots of other stuff appears
 including join/leave notices etc). Try to use a manifold stream transducers for this.
 
+__Namespaces__
+
+* core - startup / shutdown; hosting repl server; invokes logging config
+* connection - deals with opening connection to slack
+* heartbeat - takes a stream and pings it periodically
+* logging - configs logging
+* listener - take a stream and invoke func on messages
+that come in
+* filters - select specific types messages off a stream
+* indexing - ES connections and publishing
+
 ### Deployment / Daemonization
 
 Currently just running it on a DigitalOcean VPS.
