@@ -2,6 +2,9 @@
   (:gen-class)
   (:require [clojure.tools.logging :as log]
             [slack-slurper.logging]
+            [slack-slurper.connection :as conn]
+            [slack-slurper.listener :as l]
+            [slack-slurper.heartbeat :as hb]
             [clojure.tools.nrepl.server :as repl]
             [slack-slurper.slurper :as slurper]))
 
@@ -15,10 +18,10 @@
   (.addShutdownHook (Runtime/getRuntime) (Thread. (fn [] (repl/stop-server @repl-server)))))
 
 (defn start []
-  (slurper/slurp-it)
-  (log/info "**** Started slurper. Will begin wait loop. ****")
-  (while @running?
-    (Thread/sleep 2000)))
+  (let [c (conn/ws-stream)]
+    (l/listen c #(log/info %) running?)
+    (hb/heartbeat c hb/message running?))
+  (log/info "**** Started slurper. ****"))
 
 (defn stop [] (reset! running? false))
 
