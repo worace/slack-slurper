@@ -6,12 +6,19 @@
 
 (defn ping-id [] (System/currentTimeMillis))
 
-(defn ping [conn]
-  (s/put! conn
-          (json/generate-string {:id (ping-id) :type "ping"} )))
+(defn message []
+  (json/generate-string {:id (ping-id) :type "ping"} ))
 
-(defn heartbeat [conn]
-  (a/go
-    (while (not (s/closed? conn))
-      (log/info "pinging connection: " (ping conn))
-      (Thread/sleep 10000))))
+(defn heartbeat
+  "Takes a stream, a function for producing new HB messages,
+   a kill-switch, and a time interval (in ms). As long as kill switch
+   is true, will invoke msg function and put resulting value
+   onto the stream every <time interval>. If no interval is
+   provided, defaults to 10 seconds"
+  ([stream msg-generator switch]
+   (heartbeat stream msg-generator switch 10000))
+  ([stream msg-generator switch interval]
+   (a/go
+     (while (and @switch (not (s/closed? stream)))
+       (s/put! stream (msg-generator))
+       (Thread/sleep interval)))))
