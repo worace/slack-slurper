@@ -5,7 +5,7 @@
 (def layout (org.apache.log4j.PatternLayout. "%d{ISO8601} %-5p %c - %m%n"))
 
 (defn configure-logging!
-  ([] (configure-logging! "/var/log/slack-slurper/slack_slurper.log"))
+  ([] (configure-logging! "./logs/dev.log"))
   ([logfile]
    (conf/set-loggers!
     ["slack-slurper"]

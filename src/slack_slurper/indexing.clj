@@ -34,7 +34,7 @@
 
 (defn message-stream
   ([] (message-stream (s/stream)))
-  ([stream] (->> input-stream
+  ([stream] (->> stream
                  (s/map #(last (clojure.string/split % #"- ")))
                  (s/filter #(.contains % "{\"type"))
                  (s/map json/parse-string)
