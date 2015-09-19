@@ -1,22 +1,36 @@
-# slack-slurper
+## SlackSlurper
 
-A Clojure library designed to ... well, that part is up to you.
+Experiment to see if it's possible to slurp and archive
+messages from a slack org so we can search them beyond
+the free tier expiration period
 
-## Usage
+So far it:
 
-FIXME
+* Connects to the Slack RTM API using websockets
+* Heartbeat the connection using Ping messages to keep
+it alive
+* Writes all messages to a log file
+* Supports processing log files to push all
+messages into ElasticSearch.
 
-## License
+For searching, see related [Slack Searcher](https://github.com/worace/slack-searcher)
+project which attempts to give a super basic web interface
+for searching the messages.
 
-Copyright © 2015 FIXME
+### TODOs
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+* [ ] Auto-reconnect on websocket connection closing (even
+with the heartbeat we sometimes lose connection and should just restart it)
+* [ ] Publish the messages to ES in real time as they come in in addition
+to logging them
+* [ ] Filter out only "message" type messages (lots of other stuff appears
+including join/leave notices etc). Try to use a manifold stream transducers for this.
 
+### Deployment / Daemonization
 
-### Daemonization
+Currently just running it on a DigitalOcean VPS.
 
-Just using `init.d` with the following init conf in
+Uses `init.d` with the following init conf in
 `/etc/init/slack-slurper.conf`:
 
 ```
@@ -27,6 +41,9 @@ start on runlevel [2345]
 stop on shutdown
 exec java -jar /root/slack-slurper.jar
 ```
+
+TODO: Would be interesting to investigate using Monit or another tool
+to get more interesting status information on the process.
 
 ### Random Notes
 

@@ -15,6 +15,29 @@
 (defn ws-connection [url]
   @(http/websocket-client url))
 
+(defn message-stream
+  ([] (message-stream (s/stream)))
+  ([stream] (->> stream
+                 (s/map #(last (clojure.string/split % #"- ")))
+                 (s/filter #(.contains % "{\"type"))
+                 (s/map json/parse-string)
+                 (s/filter #(= "message" (% "type"))))))
+
+(defn stream-test []
+  (let [msg-stream (s/stream)
+        msg-only (message-stream msg-stream)]
+    (s/put! msg-stream "logger info - {\"type\": \"message\", \"text\": \"hi\"}")
+    (s/take! msg-only)))
+
+#_(defn log-file->messages [f]
+  (with-open [r (clojure.java.io/reader f)]
+    (doall (->> (line-seq r)
+                (map extract-message)
+                (filter (fn [m] (.contains m "{\"type")))
+                (map json/parse-string)
+                (filter (fn [m] (= "message" (m "type"))))) )))
+
+
 (defn listen [f conn]
   (async/go
     (loop [message @(s/take! conn)]

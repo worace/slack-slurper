@@ -1,5 +1,6 @@
 (ns slack-slurper.indexing
   (:require [cheshire.core :as json]
+            [manifold.stream :as s]
             [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.query         :as q]
@@ -11,10 +12,10 @@
 (def mapping-name "messages")
 (def mappings
   {mapping-name {:properties {:user    {:type "string" :store "yes"}
-                            :channel {:type "string" :store "yes"}
-                            :text    {:type "string" :store "yes" :analyzer "standard"}
-                            :subtype {:type "string" :store "yes"}
-                            :ts      {:type "string" :store "yes"}}}})
+                              :channel {:type "string" :store "yes"}
+                              :text    {:type "string" :store "yes" :analyzer "standard"}
+                              :subtype {:type "string" :store "yes"}
+                              :ts      {:type "string" :store "yes"}}}})
 
 (def create-index! (partial esi/create es-conn index-name :mappings mappings))
 (def delete-index! (partial esi/delete es-conn index-name))
@@ -30,6 +31,14 @@
 
 (defn extract-message [string]
   (last (clojure.string/split string #"- ")))
+
+(defn message-stream
+  ([] (message-stream (s/stream)))
+  ([stream] (->> input-stream
+                 (s/map #(last (clojure.string/split % #"- ")))
+                 (s/filter #(.contains % "{\"type"))
+                 (s/map json/parse-string)
+                 (s/filter #(= "message" (% "type"))))))
 
 (defn log-file->messages [f]
   (with-open [r (clojure.java.io/reader f)]
