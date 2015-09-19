@@ -4,7 +4,10 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main ^:skip-aot slack-slurper.core
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:uberjar {:aot :all
+                       :env {:log-file "/var/log/slack-slurper/slack_slurper.log"}}
+             :dev     {:env {:log-file "./logs/development.log"}}
+             :test    {:env {:log-file "./logs/test.log"}}}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.nrepl "0.2.10"]
                  [aleph "0.4.0"]
@@ -14,4 +17,7 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [cheshire "5.5.0"]
                  [clojurewerkz/elastisch "2.1.0"]
-                 [clj-logging-config "1.9.12"]])
+                 [environ "1.0.1"]
+                 [clj-logging-config "1.9.12"]]
+  :plugins [[lein-environ "1.0.1"]]
+)
