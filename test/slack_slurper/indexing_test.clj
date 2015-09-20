@@ -58,3 +58,10 @@
     (is (= 6 (get-in (retried-q (q/match-all)) [:hits :total])))
     (is (= 1 (get-in (retried-q (q/term :text "cuz")) [:hits :total])))
     ))
+
+(deftest test-searching-for-users
+  (testing "finds result where user is either mentioned or speaking"
+    (rebuild-index!)
+    (let [res (retried-q (q/term :text "jmejia"))]
+      ;; 1 message from josh and 1 mentioning him
+      (is (= 2 (get-in res [:hits :total]))))))

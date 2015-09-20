@@ -93,3 +93,44 @@ __Known slack event message subtypes__
 * "file_public"
 * "presence_change"
 * "file_shared"
+
+__TODO - Searching on User Names__
+
+need to match speaking user as well as mentioned users
+
+* need to merge user info into messages when indexing
+* possible new fields? - Username; user full name
+* possible additional "mentions" field for embedded UID mentions?
+
+Message samples:
+
+```json
+{"type":"message",
+"channel":"C056H7MSP",
+"user":"U04RWRJ5G",
+"text":"<@U02C40LBY>: what is this collusion??????? Who put you up to this Josh?",
+"ts":"1440799564.000229",
+"team":"T029P2S9M"}
+```
+
+```json
+{"type":"message",
+"channel":"C056H7MSP",
+"user":"U02C40LBY",
+"text":"<@U04RWRJ5G> <@U06TGDUCC> <@U0715GVST> <@U04T2GBH6> There?s no emergency meeting.",
+"ts":"1440799599.000232",
+"team":"T029P2S9M"}
+```
+
+Possibility: use `or` filter:
+
+```clojure
+(require '[clojurewerkz.elastisch.rest.document :as esd])
+(require '[clojurewerkz.elastisch.query :as q])
+
+(esd/search conn "posts" "post"
+            :query (q/filtered :query  {:term {"name.first" "Shay"}}
+                               :filter {:or {:filters [{:term {"name.second"   "Banon"}}
+                                                       {:term {"name.nickname" "kimchy"}}]}}))
+
+```
