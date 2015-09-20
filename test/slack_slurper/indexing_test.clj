@@ -2,8 +2,20 @@
   (:require [clojure.test :refer :all]
             [environ.core :refer [env]]
             [clojurewerkz.elastisch.rest.index :as esi]
+            [clojurewerkz.elastisch.query         :as q]
             [slack-slurper.indexing :refer :all]))
 
+(defn retried-q
+  ([pattern] (retried-q pattern 0))
+  ([pattern attempts]
+   (let [res (query pattern)]
+     (if (> (get-in res [:hits :total]) 0)
+       res
+       (if (< attempts 8)
+         (do
+           (Thread/sleep 200)
+           (recur pattern (+ 1 attempts)))
+         nil)))))
 
 (deftest test-destroying-index
   (testing "it deletes index in ES"
@@ -12,6 +24,7 @@
 
 (deftest test-creating-index
   (testing "creates index in es"
+    (delete-index!)
     (create-index!)
     (is (esi/exists? es-conn index-name))))
 
@@ -39,6 +52,9 @@
     (is (= "pizza-1234"
            (message-id {"channel" "pizza" "ts" "1234"})))))
 
-
-(deftest test-indexing-log-files
-  )
+(deftest test-indexing-and-querying
+  (testing "builds searchable index"
+    (rebuild-index!)
+    (is (= 6 (get-in (retried-q (q/match-all)) [:hits :total])))
+    (is (= 1 (get-in (retried-q (q/term :text "cuz")) [:hits :total])))
+    ))
