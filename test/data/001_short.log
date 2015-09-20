@@ -1,0 +1,20 @@
+2015-08-28 18:05:46,785 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 18:05:46,862 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440799546785}
+2015-08-28 18:05:46,962 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U04UALVNT"}
+2015-08-28 18:05:49,271 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C09J27Q48","user":"U029PS9GL"}
+2015-08-28 18:05:50,693 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U04UALVNT","text":"<@U04RWRJ5G>: <@U04T2GBH6> There?s 2 that?ll be on autodraft!","ts":"1440799550.000228","team":"T029P2S9M"}
+2015-08-28 18:05:54,209 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U03P5UB9G","presence":"active"}
+2015-08-28 18:05:54,284 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C09J27Q48","user":"U029PS9GL"}
+2015-08-28 18:05:56,789 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 18:05:56,865 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440799556788}
+2015-08-28 18:05:58,056 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C09J27Q48","user":"U029PS9GL"}
+2015-08-28 18:05:58,281 INFO  slack-slurper.slurper - {"type":"reaction_added","user":"U04UALVNT","item":{"type":"message","channel":"C056H7MSP","ts":"1440799550.000228"},"reaction":"trollface","event_ts":"1440799557.810068"}
+2015-08-28 18:06:01,642 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C09J27Q48","user":"U029PS9GL"}
+2015-08-28 18:06:05,100 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U04RWRJ5G","text":"<@U02C40LBY>: what is this collusion??????? Who put you up to this Josh?","ts":"1440799564.000229","team":"T029P2S9M"}
+2015-08-28 18:06:26,214 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U02FM3RK9","presence":"active"}
+2015-08-28 18:06:26,791 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 18:06:26,879 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440799586790}
+2015-08-28 18:06:36,791 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 18:06:36,867 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440799596791}
+2015-08-28 18:06:39,309 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U02C40LBY","text":"<@U04RWRJ5G> <@U06TGDUCC> <@U0715GVST> <@U04T2GBH6> There?s no emergency meeting.","ts":"1440799599.000232","team":"T029P2S9M"}
+2015-08-28 18:06:41,288 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U06TNGCTX","presence":"away"}

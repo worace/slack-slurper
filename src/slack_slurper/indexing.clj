@@ -1,14 +1,15 @@
 (ns slack-slurper.indexing
   (:require [cheshire.core :as json]
             [manifold.stream :as s]
+            [environ.core :refer [env]]
             [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.query         :as q]
             [clojurewerkz.elastisch.rest.document :as esd]))
 
 
-(def es-conn (esr/connect "http://127.0.0.1:9200"))
-(def index-name "slack_slurper")
+(def es-conn (esr/connect (env :es-host)))
+(def index-name (env :es-index-name))
 (def mapping-name "messages")
 (def mappings
   {mapping-name {:properties {:user    {:type "string" :store "yes"}
@@ -24,7 +25,7 @@
 #_(esd/search es-conn index-name "messages" :query (q/term :text "horace"))
 
 (defn log-files
-  ([] (log-files "./logs"))
+  ([] (log-files (env :log-dir)))
   ([dir] (filter (fn [f] (and (.isFile f)
                               (.contains (.getName f) ".log")))
                  (file-seq (clojure.java.io/file dir)))))

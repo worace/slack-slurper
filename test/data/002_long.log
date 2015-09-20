@@ -1,0 +1,38 @@
+2015-08-28 00:00:00,278 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:00,355 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734400278}
+2015-08-28 00:00:04,189 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06TNGCTX"}
+2015-08-28 00:00:04,264 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U04S0TK1U","presence":"away"}
+2015-08-28 00:00:05,764 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U06TNGCTX","text":"<@U06U9LUMA>: Can that photo please be our new emoji for ?I?m so confused?? I would probably use it every day. Maybe we should just have a whole set of Regis emojis?","ts":"1440734405.000193","team":"T029P2S9M"}
+2015-08-28 00:00:08,217 INFO  slack-slurper.slurper - {"type":"reaction_added","user":"U06U9LUMA","item":{"type":"message","channel":"C06DSN8CT","ts":"1440734377.000213"},"reaction":"uke_mike","event_ts":"1440734408.150926"}
+2015-08-28 00:00:10,281 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:10,358 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734410279}
+2015-08-28 00:00:13,838 INFO  slack-slurper.slurper - {"type":"reaction_added","user":"U044N088N","item":{"type":"message","channel":"C06DSN8CT","ts":"1440734377.000213"},"reaction":"uke_mike","event_ts":"1440734413.151058"}
+2015-08-28 00:00:20,060 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06U9LUMA"}
+2015-08-28 00:00:20,281 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:20,359 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734420281}
+2015-08-28 00:00:23,951 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06U9LUMA"}
+2015-08-28 00:00:27,840 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U06U9LUMA","text":"Yea do it! Right now it?s sales_engine","ts":"1440734427.000194","team":"T029P2S9M"}
+2015-08-28 00:00:28,426 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06U9LUMA"}
+2015-08-28 00:00:30,283 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:30,361 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734430282}
+2015-08-28 00:00:31,695 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U03J6JQLR","presence":"away"}
+2015-08-28 00:00:32,791 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06U9LUMA"}
+2015-08-28 00:00:34,997 INFO  slack-slurper.slurper - {"type":"reaction_added","user":"U044N088N","item":{"type":"message","channel":"C06DSN8CT","ts":"1440734377.000213"},"reaction":"shark","event_ts":"1440734434.151561"}
+2015-08-28 00:00:36,059 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06U9LUMA"}
+2015-08-28 00:00:38,720 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U02C3KR10","presence":"active"}
+2015-08-28 00:00:39,604 INFO  slack-slurper.slurper - {"type":"message","channel":"C056H7MSP","user":"U06U9LUMA","text":"cuz that is everyones face when they read the spec","ts":"1440734439.000195","team":"T029P2S9M"}
+2015-08-28 00:00:40,284 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:40,361 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734440283}
+2015-08-28 00:00:50,284 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:00:50,362 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734450284}
+2015-08-28 00:00:50,974 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U06TGSH9B","presence":"active"}
+2015-08-28 00:00:51,784 INFO  slack-slurper.slurper - {"type":"presence_change","user":"U045A29JY","presence":"away"}
+2015-08-28 00:01:00,286 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:01:00,364 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734460285}
+2015-08-28 00:01:10,287 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:01:10,364 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734470286}
+2015-08-28 00:01:13,121 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06THGN01"}
+2015-08-28 00:01:16,428 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06THGN01"}
+2015-08-28 00:01:20,288 INFO  slack-slurper.heartbeat - pinging connection:  << true >>
+2015-08-28 00:01:20,365 INFO  slack-slurper.slurper - {"type":"pong","reply_to":1440734480287}
+2015-08-28 00:01:22,501 INFO  slack-slurper.slurper - {"type":"user_typing","channel":"C056H7MSP","user":"U06THGN01"}

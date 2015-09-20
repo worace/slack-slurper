@@ -5,9 +5,18 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main ^:skip-aot slack-slurper.core
   :profiles {:uberjar {:aot :all
-                       :env {:log-file "/var/log/slack-slurper/slack_slurper.log"}}
-             :dev     {:env {:log-file "./logs/development.log"}}
-             :test    {:env {:log-file "./logs/test.log"}}}
+                       :env {:log-file "/var/log/slack-slurper/slack_slurper.log"
+                             :es-index-name "slack_slurper_production"
+                             :es-host "http://127.0.0.1:9200"
+                             :log-dir "/var/log/slack-slurper/"}}
+             :dev     {:env {:log-file "./logs/development.log"
+                             :es-index-name "slack_slurper_development"
+                             :es-host "http://127.0.0.1:9200"
+                             :log-dir "./logs"}}
+             :test    {:env {:log-file "./logs/test.log"
+                             :es-host "http://127.0.0.1:9200"
+                             :es-index-name "slack_slurper_test"
+                             :log-dir "./test/data"}}}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.nrepl "0.2.10"]
                  [aleph "0.4.0"]
