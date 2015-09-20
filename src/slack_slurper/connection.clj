@@ -10,3 +10,7 @@
 (defn ws-stream
   ([] (ws-stream (get-fresh-ws-url)))
   ([url] @(http/websocket-client url)))
+
+(def users (memoize (partial slack-api/users-list api-token)))
+(def channels (memoize (partial slack-api/channels-list api-token)))
+

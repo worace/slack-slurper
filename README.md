@@ -25,6 +25,8 @@ with the heartbeat we sometimes lose connection and should just restart it)
 to logging them
 * [ ] Filter out only "message" type messages (lots of other stuff appears
 including join/leave notices etc). Try to use a manifold stream transducers for this.
+* [ ] pull in user info / search by user name
+* [ ] pull in channel info / search by channel name
 * [ ] Lots more tests
 
 __Namespaces__
