@@ -11,6 +11,10 @@
   ([] (ws-stream (get-fresh-ws-url)))
   ([url] @(http/websocket-client url)))
 
-(def users (memoize (partial slack-api/users-list api-token)))
+(defn indexed-users []
+  (reduce (fn [map user] (assoc map (:id user) user))
+          (slack-api/users-list api-token)))
+
+(def users (memoize indexed-users))
 (def channels (memoize (partial slack-api/channels-list api-token)))
 
