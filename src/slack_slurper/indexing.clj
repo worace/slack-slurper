@@ -2,6 +2,7 @@
   (:require [cheshire.core :as json]
             [manifold.stream :as s]
             [environ.core :refer [env]]
+            [slack-slurper.connection :as slack]
             [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.query         :as q]
@@ -55,7 +56,27 @@
 (defn message-id [m]
   (str (m "channel") "-" (m "ts")))
 
+(defn with-user-info [m]
+  (let [u ((slack/users) (m "user"))]
+    (println "u: " u)
+    (println "will add u: " (u :name))
+    (-> m
+        (assoc "username" (u :name))
+        #_(assoc ""))))
+
+(defn prep-message
+  "take JSON payload out of slack RTM api and prepare it for indexing"
+  [m]
+  (-> m
+      (dissoc "type" "team")
+      (with-user-info)
+      ))
+
+;; message keys:
+;; type, channel, user, text, ts, team
+;; to add: username, user_full_name, user_first_name, user_last_name
 (defn index-message! [m]
+  (println "will index m: " m)
   (esd/create es-conn
               index-name
               mapping-name

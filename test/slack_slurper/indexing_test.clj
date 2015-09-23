@@ -59,7 +59,22 @@
     (is (= 1 (get-in (retried-q (q/term :text "cuz")) [:hits :total])))
     ))
 
-(deftest test-searching-for-users
+(def sample-message
+  {"type" "message",
+   "channel" "C056H7MSP"
+   "user" "U06U9LUMA"
+   "text" "<@U06U9LUMA> Yea do it! Right now it?s sales_engine"
+   "ts" "1440734427.000194"
+   "team" "T029P2S9M"})
+
+(deftest test-prepping-message
+  (testing "adds and removes appropriate fields"
+    (let [prepped (prep-message sample-message)]
+      (is (nil? (prepped "team")))
+      (is (nil? (prepped "type")))
+      (is (= "regis" (prepped "username"))))))
+
+#_(deftest test-searching-for-users
   (testing "finds result where user is either mentioned or speaking"
     (rebuild-index!)
     (let [res (retried-q (q/term :text "jmejia"))]
