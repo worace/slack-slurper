@@ -3,6 +3,7 @@
             [environ.core :refer [env]]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.query         :as q]
+            [slack-slurper.connection]
             [slack-slurper.indexing :refer :all]))
 
 (defn retried-q
@@ -63,20 +64,26 @@
   {"type" "message",
    "channel" "C056H7MSP"
    "user" "U06U9LUMA"
-   "text" "<@U06U9LUMA> Yea do it! Right now it?s sales_engine"
+   "text" "<@U07U5SQFM> Yea do it! Right now it?s sales_engine"
    "ts" "1440734427.000194"
    "team" "T029P2S9M"})
 
+(def sample-users
+  (read-string (slurp "./test/data/sample_users.edn")))
+
 (deftest test-prepping-message
-  (testing "adds and removes appropriate fields"
+  (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
+    (testing "adds and removes appropriate fields"
     (let [prepped (prep-message sample-message)]
       (is (nil? (prepped "team")))
       (is (nil? (prepped "type")))
-      (is (= "regis" (prepped "username"))))))
+      (is (= "regis" (prepped "username")))
+      (is (= "Regis Boudinot" (prepped "user_real_name")))))))
 
-#_(deftest test-searching-for-users
-  (testing "finds result where user is either mentioned or speaking"
-    (rebuild-index!)
-    (let [res (retried-q (q/term :text "jmejia"))]
-      ;; 1 message from josh and 1 mentioning him
-      (is (= 2 (get-in res [:hits :total]))))))
+(deftest test-searching-for-users
+  (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
+    (testing "finds result where user is either mentioned or speaking"
+      (rebuild-index!)
+      (let [res (retried-q (q/term :username "jmejia"))]
+        ;; 1 message from josh
+        (is (= 1 (get-in res [:hits :total])))))))

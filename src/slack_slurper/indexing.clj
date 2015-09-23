@@ -14,6 +14,8 @@
 (def mapping-name "messages")
 (def mappings
   {mapping-name {:properties {:user    {:type "string" :store "yes"}
+                              :username {:type "string" :store "yes"}
+                              :user_real_name {:type "string" :store "yes"}
                               :channel {:type "string" :store "yes"}
                               :text    {:type "string" :store "yes" :analyzer "standard"}
                               :subtype {:type "string" :store "yes"}
@@ -57,12 +59,11 @@
   (str (m "channel") "-" (m "ts")))
 
 (defn with-user-info [m]
-  (let [u ((slack/users) (m "user"))]
-    (println "u: " u)
-    (println "will add u: " (u :name))
+  (let [uid (m "user")
+        u ((slack/users) uid)]
     (-> m
         (assoc "username" (u :name))
-        #_(assoc ""))))
+        (assoc "user_real_name" (u :real_name)))))
 
 (defn prep-message
   "take JSON payload out of slack RTM api and prepare it for indexing"
@@ -76,11 +77,10 @@
 ;; type, channel, user, text, ts, team
 ;; to add: username, user_full_name, user_first_name, user_last_name
 (defn index-message! [m]
-  (println "will index m: " m)
   (esd/create es-conn
               index-name
               mapping-name
-              (dissoc m "type" "team")
+              (prep-message m)
               :id (message-id m)))
 
 (defn index-messages! [messages]
