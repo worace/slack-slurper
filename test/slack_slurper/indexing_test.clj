@@ -12,11 +12,11 @@
    (let [res (query pattern)]
      (if (> (get-in res [:hits :total]) 0)
        res
-       (if (< attempts 8)
+       (if (< attempts 15)
          (do
            (Thread/sleep 200)
            (recur pattern (+ 1 attempts)))
-         nil)))))
+         (do (println "WARNING: Q Timed Out") res))))))
 
 (deftest test-destroying-index
   (testing "it deletes index in ES"
@@ -84,6 +84,13 @@
   (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
     (testing "finds result where user is either mentioned or speaking"
       (rebuild-index!)
-      (let [res (retried-q (q/term :username "jmejia"))]
+      (let [by-uname (retried-q (q/term :username "jmejia"))]
+        (is (= 1 (get-in by-uname [:hits :total])))))))
+
+(deftest test-searching-full-name
+  (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
+    (testing "finds em"
+      (rebuild-index!)
+      (let [by-fullname (retried-q (q/term :user_real_name "justinh"))]
         ;; 1 message from josh
-        (is (= 1 (get-in res [:hits :total])))))))
+        (is (= 1 (get-in by-fullname [:hits :total])))))))
