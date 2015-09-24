@@ -16,6 +16,7 @@
   {mapping-name {:properties {:user    {:type "string" :store "yes"}
                               :username {:type "string" :store "yes"}
                               :user_real_name {:type "string" :store "yes" :analyzer "simple"}
+                              :user_mentions {:type "string" :store "yes" :analyzer "simple"}
                               :channel {:type "string" :store "yes"}
                               :text    {:type "string" :store "yes" :analyzer "standard"}
                               :subtype {:type "string" :store "yes"}
@@ -58,12 +59,22 @@
 (defn message-id [m]
   (str (m "channel") "-" (m "ts")))
 
+(defn user-mentions [m]
+  (if-let [matches (re-seq #"<@(\w+)>" (get m "text"))]
+    (->> matches
+         (map last)
+         (map (partial get (slack/users)))
+         (map :real_name)
+         (clojure.string/join ", "))
+    []))
+
 (defn with-user-info [m]
   (let [uid (m "user")
         u ((slack/users) uid)]
     (-> m
         (assoc "username" (u :name))
-        (assoc "user_real_name" (u :real_name)))))
+        (assoc "user_real_name" (u :real_name))
+        (assoc "user_mentions" (user-mentions m)))))
 
 (defn prep-message
   "take JSON payload out of slack RTM api and prepare it for indexing"

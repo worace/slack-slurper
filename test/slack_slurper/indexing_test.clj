@@ -64,7 +64,7 @@
   {"type" "message",
    "channel" "C056H7MSP"
    "user" "U06U9LUMA"
-   "text" "<@U07U5SQFM> Yea do it! Right now it?s sales_engine"
+   "text" "<@U029PS9GL> Yea do it! <@U06TNGCTX> Right now it?s sales_engine"
    "ts" "1440734427.000194"
    "team" "T029P2S9M"})
 
@@ -78,6 +78,7 @@
       (is (nil? (prepped "team")))
       (is (nil? (prepped "type")))
       (is (= "regis" (prepped "username")))
+      (is (= "Josh Cheek, Mary Beth Burch"  (prepped "user_mentions")))
       (is (= "Regis Boudinot" (prepped "user_real_name")))))))
 
 (deftest test-searching-for-users
@@ -95,3 +96,17 @@
             last (retried-q (q/term :user_real_name "holzman"))]
         (is (= 1 (get-in lc [:hits :total])))
         (is (= 1 (get-in last [:hits :total])))))))
+
+(deftest test-searching-mentioned-users
+  (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
+    (testing "finds usernames included in the message"
+      (rebuild-index!)
+      (is (= 1
+             (-> (q/term :user_mentions "joshua")
+                 (retried-q)
+                 (get-in [:hits :total]))))
+      (is (= 1
+             (-> (q/term :user_mentions "travis")
+                 (retried-q)
+                 (get-in [:hits :total])))))))
+
