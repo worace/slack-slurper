@@ -91,6 +91,7 @@
   (with-redefs [slack-slurper.connection/users (fn [] sample-users)]
     (testing "finds em"
       (rebuild-index!)
-      (let [by-fullname (retried-q (q/term :user_real_name "justinh"))]
-        ;; 1 message from josh
-        (is (= 1 (get-in by-fullname [:hits :total])))))))
+      (let [lc (retried-q (q/term :user_real_name "justin"))
+            last (retried-q (q/term :user_real_name "holzman"))]
+        (is (= 1 (get-in lc [:hits :total])))
+        (is (= 1 (get-in last [:hits :total])))))))

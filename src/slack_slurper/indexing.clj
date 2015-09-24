@@ -15,7 +15,7 @@
 (def mappings
   {mapping-name {:properties {:user    {:type "string" :store "yes"}
                               :username {:type "string" :store "yes"}
-                              :user_real_name {:type "string" :store "yes" :analyzer "standard"}
+                              :user_real_name {:type "string" :store "yes" :analyzer "simple"}
                               :channel {:type "string" :store "yes"}
                               :text    {:type "string" :store "yes" :analyzer "standard"}
                               :subtype {:type "string" :store "yes"}
