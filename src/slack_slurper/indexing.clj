@@ -70,12 +70,12 @@
     []))
 
 (defn with-user-info [m]
-  (let [uid (m "user")
-        u ((slack/users) uid)]
-    (-> m
-        (assoc "username" (u :name))
-        (assoc "user_real_name" (u :real_name))
-        (assoc "user_mentions" (user-mentions m)))))
+  (if-let [u ((slack/users) (m "user"))]
+         (-> m
+             (assoc "username" (u :name))
+             (assoc "user_real_name" (u :real_name))
+             (assoc "user_mentions" (user-mentions m)))
+         (merge m {"username" "" "user_real_name" "" "user_mentions" ""})))
 
 (defn prep-message
   "take JSON payload out of slack RTM api and prepare it for indexing"
@@ -89,11 +89,13 @@
 ;; type, channel, user, text, ts, team
 ;; to add: username, user_full_name, user_first_name, user_last_name
 (defn index-message! [m]
-  (esd/create es-conn
+  (try
+    (esd/create es-conn
               index-name
               mapping-name
               (prep-message m)
-              :id (message-id m)))
+              :id (message-id m))
+    (catch Exception e (println "Failed to index message: " m))))
 
 (defn index-messages! [messages]
   (doseq [m messages]
