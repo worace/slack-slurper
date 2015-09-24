@@ -51,7 +51,8 @@
                 (map extract-message)
                 (filter (fn [m] (.contains m "{\"type")))
                 (map json/parse-string)
-                (filter (fn [m] (= "message" (m "type"))))) )))
+                (filter (fn [m] (= "message" (m "type"))))
+                (filter (fn [m] (nil? (m "subtype"))))))))
 
 (defn messages [log-files]
   (mapcat log-file->messages log-files))
