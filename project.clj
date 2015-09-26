@@ -4,6 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main ^:skip-aot slack-slurper.core
+  :uberjar-name "slack-slurper.jar"
   :profiles {:uberjar {:aot :all
                        :env {:log-file "/var/log/slack-slurper/slack_slurper.log"
                              :es-index-name "slack_slurper_production"
