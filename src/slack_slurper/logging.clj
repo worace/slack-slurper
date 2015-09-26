@@ -5,8 +5,10 @@
 
 (def layout (org.apache.log4j.PatternLayout. "%d{ISO8601} %-5p %c - %m%n"))
 
+(defn log-file [] (clojure.string/join "/" [(env :log-dir) "slack_slurper.log"]))
+
 (defn configure-logging!
-  ([] (configure-logging! (env :log-file)))
+  ([] (configure-logging! (log-file)))
   ([logfile]
    (conf/set-loggers!
     ["slack-slurper"]
